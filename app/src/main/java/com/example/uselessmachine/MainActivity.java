@@ -36,6 +36,7 @@ public class MainActivity extends AppCompatActivity {
                 if(isChecked) {
                     new CountDownTimer(2000, 1000) {
                         @Override
+                        // long l is milliseconds until finished
                         public void onTick(long l) {
                             if(!useless.isChecked()) {
                                 cancel();
@@ -55,10 +56,26 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
-        self_destruct.setOnLongClickListener(new View.OnLongClickListener() {
+
+        // set the onclick listener for the self destruct button
+        // make a 10 second countdown timer
+        // display how much time is left on the countdown on the button
+        // when the timer is complete, call the finish() method to close the activity
+        // stretch goal: make the background blink red
+        // stretch goal: make the background blink red increasingly faster as time runs out
+        self_destruct.setOnClickListener(new View.OnClickListener() {
             @Override
-            public boolean onLongClick(View view) {
-                return false;
+            public void onClick(View view) {
+                new CountDownTimer(10000, 1000) {
+                    @Override
+                    public void onTick(long l) {
+                        self_destruct.setText(String.valueOf((int) l/1000));
+                    }
+                    @Override
+                    public void onFinish() {
+                        finish();
+                    }
+                }.start();
             }
         });
     }
